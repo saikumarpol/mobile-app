@@ -1,0 +1,30 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "@tensorflow-models/blazeface": "^0.1.0",
+    "@tensorflow/tfjs-node": "^4.22.0",
+    "@vladmandic/face-api": "^1.7.15",
+    "axios": "^1.13.5",
+    "canvas": "^3.2.1",
+    "cors": "^2.8.6",
+    "expo-dev-client": "^6.0.20",
+    "express": "^5.2.1",
+    "minio": "^8.0.6",
+    "mongoose": "^9.2.0",
+    "multer": "^2.0.2",
+    "onnxruntime-node": "^1.24.3",
+    "react-native-vision-camera": "^4.7.3",
+    "react-native-vision-camera-face-detector": "^1.10.1",
+    "sharp": "^0.34.5"
+  }
+}
