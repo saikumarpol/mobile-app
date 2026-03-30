@@ -1,0 +1,60 @@
+{
+  "expo": {
+    "name": "mother-child-health-tracker",
+    "slug": "mother-child-health-tracker",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/images/icon.png",
+    "scheme": "frontend",
+    "userInterfaceStyle": "automatic",
+   "newArchEnabled": true,
+    "ios": {
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSCameraUsageDescription": "$(PRODUCT_NAME) needs access to your camera to capture height and eye images for child health assessment.",
+        "NSPhotoLibraryUsageDescription": "$(PRODUCT_NAME) needs access to your photo library to save captured images (optional).",
+        "ITSAppUsesNonExemptEncryption": false
+      },
+      "bundleIdentifier": "com.polakumar.motherchildhealthtracker"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/images/android-icon-foreground.png",
+        "backgroundColor": "#E6F4FE"
+      },
+      "permissions": [
+        "android.permission.CAMERA",
+        "android.permission.RECORD_AUDIO"
+      ],
+      "package": "com.polakumar.motherchildhealthtracker"
+    },
+    "web": {
+      "output": "static",
+      "favicon": "./assets/images/favicon.png"
+    },
+    "plugins": [
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "minSdkVersion": 26
+          }
+        }
+      ],
+     
+      ["expo-asset", { "assets": ["./assets/yolov8n.onnx"] }
+    
+    ]
+    ],
+    
+  
+    "extra": {
+      "eas": {
+        "projectId": "fa7b3632-2c83-49e4-9792-045c1204e4d0"
+      }
+    },
+    "experiments": {
+      "reactCanary": false
+    }
+  }
+}
