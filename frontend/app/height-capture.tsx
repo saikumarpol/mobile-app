@@ -11,7 +11,10 @@ import { Asset } from "expo-asset";
 import axios from "axios";
 import { useRouter, useLocalSearchParams } from "expo-router";
 import Svg, { Path, Circle, Line } from "react-native-svg";
-import * as ort from "onnxruntime-react-native";
+import type * as OrtType from "onnxruntime-react-native";
+function getOrt(): typeof OrtType {
+  return require("onnxruntime-react-native");
+}
 import * as jpeg from "jpeg-js";
 import { useAssets } from "expo-asset";
 
@@ -205,7 +208,7 @@ async function checkQualityOnServer(uri: string) {
 
 // ─── On-device ONNX person detection ─────────────────────────────────────────
 async function runPersonDetectionOnDevice(
-  session: ort.InferenceSession,
+  session: OrtType.InferenceSession,
   uri: string,
 ): Promise<{ detected: boolean; confidence: number }> {
   try {
@@ -233,7 +236,7 @@ async function runPersonDetectionOnDevice(
       f32[pc * 2 + i] = jpegData.data[i * 4 + 2] / 255.0;
     }
 
-    const inputTensor = new ort.Tensor("float32", f32, [1, 3, SIZE, SIZE]);
+    const inputTensor = new (getOrt().Tensor)("float32", f32, [1, 3, SIZE, SIZE]);
     const results     = await session.run({ [session.inputNames[0]]: inputTensor });
 
     const output  = results[session.outputNames[0]];
@@ -285,7 +288,7 @@ export default function HeightCaptureScreen() {
   const [blurStatus,  setBlurStatus]  = useState("bad");
   const [isSpeaking,  setIsSpeaking]  = useState(false);
 
-  const sessionRef     = useRef<ort.InferenceSession | null>(null);
+  const sessionRef     = useRef<OrtType.InferenceSession | null>(null);
   const loadingRef     = useRef(false);
   const lastSpokenKey  = useRef<string | null>(null);
   const lastSpokenTime = useRef<number>(0);
@@ -307,8 +310,8 @@ export default function HeightCaptureScreen() {
         // if (!info.exists) {
         //   await FileSystem.copyAsync({ from: localurl.uri, to: modelDest });
         // }
-        if(!assets || assets.length === 0) return
-        const session = await ort.InferenceSession.create(assets[0].localUri, {
+        if(!assets || assets.length === 0 || !assets[0].localUri) return
+        const session = await getOrt().InferenceSession.create(assets[0].localUri, {
           executionProviders: ["cpu"],
         });
         sessionRef.current = session;

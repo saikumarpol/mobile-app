@@ -187,7 +187,7 @@ export default function FormScreen() {
             {/* Height */}
             <TouchableOpacity
               style={[styles.imgBtn, heightImage ? styles.imgBtnDone : styles.imgBtnReady]}
-              onPress={() => router.push({ pathname: "/HeightCaptureScreen", params: commonParams })}
+              onPress={() => router.push({ pathname: "/height-capture", params: commonParams })}
             >
               <Text style={styles.imgBtnText}>
                 {heightImage ? "↺  Re-capture Height Image" : "📏  Capture Height Image"}
@@ -201,7 +201,7 @@ export default function FormScreen() {
               <View style={styles.eyeCol}>
                 <TouchableOpacity
                   style={[styles.imgBtn, leftEyeImage ? styles.imgBtnDone : styles.imgBtnReady]}
-                  onPress={() => router.push({ pathname: "/EyeCaptureScreen", params: { ...commonParams, eyeSide: "left" } })}
+                  onPress={() => router.push({ pathname: "/eye-capture", params: { ...commonParams, eyeSide: "left" } })}
                 >
                   <Text style={styles.imgBtnText}>{leftEyeImage ? "↺  Re-capture" : "Capture"}</Text>
                   <Text style={styles.imgBtnSub}>LEFT Eye</Text>
@@ -212,7 +212,7 @@ export default function FormScreen() {
               <View style={styles.eyeCol}>
                 <TouchableOpacity
                   style={[styles.imgBtn, rightEyeImage ? styles.imgBtnDone : styles.imgBtnReady]}
-                  onPress={() => router.push({ pathname: "/EyeCaptureScreen", params: { ...commonParams, eyeSide: "right" } })}
+                  onPress={() => router.push({ pathname: "/eye-capture", params: { ...commonParams, eyeSide: "right" } })}
                 >
                   <Text style={styles.imgBtnText}>{rightEyeImage ? "↺  Re-capture" : "Capture"}</Text>
                   <Text style={styles.imgBtnSub}>RIGHT Eye</Text>

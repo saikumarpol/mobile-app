@@ -11,7 +11,11 @@ import { Asset } from "expo-asset";
 import axios from "axios";
 import { useRouter, useLocalSearchParams } from "expo-router";
 import Svg, { Path, Circle, Line } from "react-native-svg";
-import * as ort from "onnxruntime-react-native";
+import type * as OrtType from "onnxruntime-react-native";
+// Lazy-load to avoid crashing at module evaluation time (JSI not ready yet)
+function getOrt(): typeof OrtType {
+  return require("onnxruntime-react-native");
+}
 import * as jpeg from "jpeg-js";
 
 // ─── ICONS ───────────────────────────────────────────────────────────────────
@@ -213,7 +217,7 @@ async function detectViaServer(uri: string): Promise<DetectionResult> {
 
 // ─── On-device ONNX inference ─────────────────────────────────────────────────
 async function detectOnDevice(
-  session: ort.InferenceSession, uri: string,
+  session: OrtType.InferenceSession, uri: string,
 ): Promise<DetectionResult> {
   const SIZE = MODEL_INPUT_SIZE;
   const resized = await ImageManipulator.manipulateAsync(
@@ -243,7 +247,7 @@ async function detectOnDevice(
   }
 
   const results = await session.run({
-    [session.inputNames[0]]: new ort.Tensor("float32", f32, [1, 3, SIZE, SIZE]),
+    [session.inputNames[0]]: new (getOrt().Tensor)("float32", f32, [1, 3, SIZE, SIZE]),
   });
   const output  = results[session.outputNames[0]];
   const outData = output.data as Float32Array;
@@ -298,7 +302,7 @@ export default function EyeCaptureScreen() {
   const [topPanelHeight, setTopPanelHeight] = useState(0); // measured at runtime
 
   // All refs declared before any useEffect
-  const sessionRef     = useRef<ort.InferenceSession | null>(null);
+  const sessionRef     = useRef<OrtType.InferenceSession | null>(null);
   const loadingRef     = useRef(false);
   const lastSpokenKey  = useRef<string | null>(null);
   const lastSpokenTime = useRef<number>(0);
@@ -320,7 +324,7 @@ export default function EyeCaptureScreen() {
         if (!info.exists) {
           await FileSystem.copyAsync({ from: asset.localUri!, to: dest });
         }
-        const session = await ort.InferenceSession.create(dest, { executionProviders: ["cpu"] });
+        const session = await getOrt().InferenceSession.create(dest, { executionProviders: ["cpu"] });
         sessionRef.current = session;
         console.log("✅ On-device model ready:", session.inputNames, session.outputNames);
       } catch (e: any) {

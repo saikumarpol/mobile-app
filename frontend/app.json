@@ -7,7 +7,7 @@
     "icon": "./assets/images/icon.png",
     "scheme": "frontend",
     "userInterfaceStyle": "automatic",
-   "newArchEnabled": true,
+    "newArchEnabled": false,
     "ios": {
       "supportsTablet": true,
       "infoPlist": {
@@ -41,16 +41,18 @@
           }
         }
       ],
-     
-      ["expo-asset", { "assets": ["./assets/yolov8n.onnx"] }
-    
-    ]
+      [
+        "expo-asset",
+        {
+          "assets": [
+            "./assets/yolov8n.onnx"
+          ]
+        }
+      ]
     ],
-    
-  
     "extra": {
       "eas": {
-        "projectId": "fa7b3632-2c83-49e4-9792-045c1204e4d0"
+        "projectId": "7a56c0c7-b944-4598-81dc-93c2d7e7d60a"
       }
     },
     "experiments": {

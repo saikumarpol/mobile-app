@@ -15,7 +15,7 @@ export default function RootLayout() {
     <Stack screenOptions={{ headerShown: false }}>
       <Stack.Screen name="(tabs)" />
       <Stack.Screen
-        name="EyeCaptureScreen"
+        name="eye-capture"
         options={{
           presentation: 'modal',
           headerShown: true,
@@ -23,7 +23,7 @@ export default function RootLayout() {
         }}
       />
       <Stack.Screen
-        name="HeightCaptureScreen"
+        name="height-capture"
         options={{
           presentation: 'modal',
           headerShown: true,
